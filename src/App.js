@@ -6,7 +6,7 @@ import HeroSection from './components/HeroSection';
 import AgileExperience from './components/AgileExperience';
 import ProcessOptimization from './components/ProcessOptimization';
 import AIExperience from './components/AIExperience';
-import Technologies from './components/Technologies'; // Import the Technologies component
+//import Technologies from './components/Technologies'; // Import the Technologies component
 import Footer from './components/Footer';
 import { Box } from '@mui/material';
 import { Element } from 'react-scroll';

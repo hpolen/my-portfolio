@@ -1,7 +1,7 @@
 // src/components/NavBar.js
 
 import React from 'react';
-import { AppBar, Toolbar, Button, Typography } from '@mui/material';
+import { AppBar, Toolbar, Button } from '@mui/material';
 import { Link } from 'react-scroll';
 
 function NavBar() {

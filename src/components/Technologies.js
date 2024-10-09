@@ -36,7 +36,7 @@ const Technologies = () => {
   );
 
   useEffect(() => {
-    const { Engine, Render, World, Bodies, Runner, Events } = Matter;
+    const { Engine, World, Bodies, Runner } = Matter;
 
     // Create a new engine
     const engine = Engine.create();
@@ -129,7 +129,7 @@ const Technologies = () => {
       Engine.clear(engine);
       window.removeEventListener('resize', debounceResize);
     };
-  }, [technologies, theme.palette.techBubble]);
+  }, [technologies]); // Removed 'theme.palette.techBubble' from dependencies
 
   return (
     <Box
