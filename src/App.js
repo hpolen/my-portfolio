@@ -14,6 +14,11 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme'; // Import the custom theme
+import { Routes, Route } from 'react-router-dom';
+import ProtectedRoutes from './components/ProtectedRoutes';
+import NewScreen from './components/NewScreen';
+
+
 
 function App() {
   useEffect(() => {
@@ -23,7 +28,19 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ backgroundColor: 'background.default', color: 'text.primary' }}>
-        <NavBar />
+        <NavBar>
+            <Routes>
+            <Route
+          path="/new-screen"
+          element={
+            <ProtectedRoutes>
+              <NewScreen />
+            </ProtectedRoutes>
+          }
+        />
+            </Routes>
+
+        </NavBar>
         <HeroSection />
         <Element name="agile">
           <AgileExperience />
