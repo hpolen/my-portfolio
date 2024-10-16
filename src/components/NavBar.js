@@ -58,6 +58,16 @@ function NavBar() {
           >
             AI Experience
           </Button>
+          {/* Contact Button */}
+          <Button
+            color="primary"
+            component={ScrollLink}
+            to="contact"
+            smooth={true}
+            duration={500}
+          >
+            Contact
+          </Button>
           {/* New Protected Navigation Item */}
           {isAuthenticated && (
             <Button

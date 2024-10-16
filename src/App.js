@@ -9,6 +9,7 @@ import AIExperience from './components/AIExperience';
 //import Technologies from './components/Technologies'; // Import the Technologies component
 import Footer from './components/Footer';
 import ProtectedPage from './components/ProtectedPage'; // Import the Protected Page
+import Contact from './components/Contact'; // Import the Contact component
 import { Box } from '@mui/material';
 import { Element } from 'react-scroll';
 import Aos from 'aos';
@@ -42,6 +43,10 @@ function App() {
                 </Element>
                 <Element name="ai">
                   <AIExperience />
+                </Element>
+                {/* Contact Section */}
+                <Element name="contact">
+                  <Contact />
                 </Element>
                 <Footer />
               </>
