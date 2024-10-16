@@ -1,10 +1,10 @@
-// src/components/ProtectedRoute.js
+// src/components/ProtectedRoutes.js
 
 import React from 'react';
 import { useIsAuthenticated } from '@azure/msal-react';
 import { Navigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoutes = ({ children }) => {
   const isAuthenticated = useIsAuthenticated();
 
   if (!isAuthenticated) {
@@ -16,4 +16,4 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-export default ProtectedRoute;
+export default ProtectedRoutes;

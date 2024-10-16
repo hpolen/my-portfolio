@@ -2,22 +2,25 @@
 
 import React from 'react';
 import { AppBar, Toolbar, Button, Box } from '@mui/material';
-import { Link } from 'react-scroll';
+import { Link as ScrollLink } from 'react-scroll'; // Rename to avoid confusion with React Router's Link
 import { useMsal } from '@azure/msal-react';
 import { loginRequest } from '../authConfig';
+import { Link as RouterLink } from 'react-router-dom'; // Removed useNavigate
 
 function NavBar() {
   const { instance, accounts } = useMsal();
 
   const handleLogin = () => {
-    instance.loginRedirect(loginRequest).catch(e => {
-      console.error(e);
+    instance.loginRedirect(loginRequest).catch((e) => {
+      console.error('Login Redirect Error:', e);
+      alert('Login failed. Please try again.');
     });
   };
 
   const handleLogout = () => {
-    instance.logoutRedirect().catch(e => {
-      console.error(e);
+    instance.logoutRedirect().catch((e) => {
+      console.error('Logout Redirect Error:', e);
+      alert('Logout failed. Please try again.');
     });
   };
 
@@ -30,7 +33,7 @@ function NavBar() {
         <Box sx={{ flexGrow: 1 }}>
           <Button
             color="primary"
-            component={Link}
+            component={ScrollLink}
             to="agile"
             smooth={true}
             duration={500}
@@ -39,7 +42,7 @@ function NavBar() {
           </Button>
           <Button
             color="primary"
-            component={Link}
+            component={ScrollLink}
             to="process"
             smooth={true}
             duration={500}
@@ -48,15 +51,25 @@ function NavBar() {
           </Button>
           <Button
             color="primary"
-            component={Link}
+            component={ScrollLink}
             to="ai"
             smooth={true}
             duration={500}
           >
             AI Experience
           </Button>
+          {/* New Protected Navigation Item */}
+          {isAuthenticated && (
+            <Button
+              color="primary"
+              component={RouterLink}
+              to="/protected"
+            >
+              Protected Page
+            </Button>
+          )}
         </Box>
-        
+
         {/* Login/Logout Button */}
         <Box>
           {isAuthenticated ? (
