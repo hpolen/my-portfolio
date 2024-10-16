@@ -15,13 +15,11 @@ function AgileExperience() {
             Agile Journey Experience
           </Typography>
           <Typography variant="body1" paragraph>
-            I have extensive experience helping large companies advance in their agile journey. As an SPC certified
-            professional, I have supported a wide range of teams and value streams, collaborating closely with C-level
-            leaders to implement agile methodologies effectively.
+          With a proven track record in agile leadership, I have driven significant organizational improvements by fostering collaboration, enhancing transparency, and streamlining processes. Through the application of agile methodologies, I have led teams to achieve greater efficiency, reduce delivery times, and continuously improve performance.
+           My leadership approach emphasizes empowering teams, enabling continuous growth, and creating environments where agility supports both innovation and sustainable success.
           </Typography>
           <Typography variant="body1">
-            My expertise includes coaching teams on agile best practices, facilitating agile transformations, and
-            ensuring that agile principles are adopted across the organization to improve productivity and collaboration.
+            Let collaborate and discuss your agile transformation! 
           </Typography>
         </Grid>
       </Grid>

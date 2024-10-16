@@ -12,7 +12,7 @@ function ProcessOptimization() {
             Process Optimization Experience
           </Typography>
           <Typography variant="body1" paragraph>
-            I have played a pivotal role in defining the Software Development Life Cycle (SDLC) for major enterprises.
+            I have played a pivotal role in defining the Software Development Life Cycle for major enterprises.
             My focus has been on optimizing complex processes to enhance efficiency and adaptability in a fast-paced
             technical world.
           </Typography>

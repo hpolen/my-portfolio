@@ -8,7 +8,7 @@ import aiImage from '../assets/images/ai.jpg';
 
 function AIExperience() {
   const aiPoints = [
-    "Hands-on experience with LangChain for building AI applications.",
+    "Hands-on experience with LangChain for building custom AI applications.",
     "Leveraging AI tools to optimize business processes.",
     "Educating teams on safe AI usage in highly governed environments.",
   ];
