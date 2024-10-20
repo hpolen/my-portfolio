@@ -6,7 +6,7 @@ import HeroSection from './components/HeroSection';
 import AgileExperience from './components/AgileExperience';
 import ProcessOptimization from './components/ProcessOptimization';
 import AIExperience from './components/AIExperience';
-//import Technologies from './components/Technologies'; // Import the Technologies component
+// import Technologies from './components/Technologies'; // Import the Technologies component
 import Footer from './components/Footer';
 import ProtectedPage from './components/ProtectedPage'; // Import the Protected Page
 import Contact from './components/Contact'; // Import the Contact component
@@ -18,6 +18,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme'; // Import the custom theme
 import { Routes, Route, Navigate } from 'react-router-dom'; // Import Routes, Route, Navigate
 import ProtectedRoute from './components/ProtectedRoute'; // Import ProtectedRoute
+import ChatbotAssistant from './components/ChatbotAssistant'; // Import ChatbotAssistant
 
 function App() {
   useEffect(() => {
@@ -49,6 +50,8 @@ function App() {
                   <Contact />
                 </Element>
                 <Footer />
+                {/* Chatbot Assistant */}
+                <ChatbotAssistant />
               </>
             }
           />
