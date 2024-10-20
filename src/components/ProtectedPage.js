@@ -15,15 +15,32 @@ import {
   Toolbar, // Import Toolbar for spacing
 } from '@mui/material';
 import { styled } from '@mui/system';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 // Styled Components for Chat Interface
 const ChatContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
-  maxWidth: 800,
+  maxWidth: 1200, // Increased maxWidth for better layout
   margin: 'auto',
-  height: '70vh',
+  height: '80vh', // Increased height for more chat space
   display: 'flex',
   flexDirection: 'column',
+}));
+
+const HeaderContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between', // Space between title and selector
+  marginBottom: theme.spacing(2),
+}));
+
+const Title = styled(Typography)(({ theme }) => ({
+  fontWeight: 'bold',
+}));
+
+const ChatbotSelector = styled(FormControl)(({ theme }) => ({
+  minWidth: 200,
 }));
 
 const MessagesContainer = styled(Box)(({ theme }) => ({
@@ -44,18 +61,13 @@ const MessageBubble = styled(Box)(({ theme, isUser }) => ({
   borderRadius: theme.spacing(1),
   backgroundColor: isUser ? theme.palette.primary.main : theme.palette.grey[300],
   color: isUser ? theme.palette.primary.contrastText : theme.palette.text.primary,
+  wordBreak: 'break-word', // Ensure long words break properly
 }));
 
-// Chatbot Selector (Optional)
-const ChatbotSelector = styled(FormControl)(({ theme }) => ({
-  marginBottom: theme.spacing(2),
-  minWidth: 200,
-}));
-
-// Updated query function with Authorization header
-async function query(data) {
+// Updated query function to accept chatbotId
+async function query(chatbotId, data) {
   const response = await fetch(
-    "https://flowise-5ho4.onrender.com/api/v1/prediction/fe4fa6cb-b1b8-433d-9637-d099c59ef15a",
+    `https://flowise-5ho4.onrender.com/api/v1/prediction/${chatbotId}`,
     {
       headers: {
         Authorization: "Bearer u05FPtq5wFIkxRLSjKbu2EGvUj3btqak_LULQERSw-4",
@@ -76,6 +88,12 @@ async function query(data) {
 }
 
 const ProtectedPage = () => {
+  // Define chatbots with their respective IDs and names
+  const chatbots = {
+    "fe4fa6cb-b1b8-433d-9637-d099c59ef15a": "Recipe",
+    "a8e82215-ea76-4797-8e35-e5eff586fada": "Harry Polen LLM"
+  };
+
   // State for chat history
   const [messages, setMessages] = useState([]);
   // State for user input
@@ -85,7 +103,7 @@ const ProtectedPage = () => {
   // Ref for auto-scrolling
   const messagesEndRef = useRef(null);
   // State for selected chatbot (if multiple)
-  const [selectedChatbot, setSelectedChatbot] = useState('fe4fa6cb-b1b8-433d-9637-d099c59ef15a'); // Updated chatbot ID
+  const [selectedChatbot, setSelectedChatbot] = useState('fe4fa6cb-b1b8-433d-9637-d099c59ef15a'); // Default to Recipe
 
   // Scroll to the latest message whenever messages change
   useEffect(() => {
@@ -103,8 +121,8 @@ const ProtectedPage = () => {
     setLoading(true);
 
     try {
-      // Query the Flowise backend
-      const response = await query({ question: input });
+      // Query the Flowise backend with the selected chatbot
+      const response = await query(selectedChatbot, { question: input });
 
       // **Debugging Step:** Log the entire response
       console.log('Flowise Response:', response);
@@ -131,7 +149,7 @@ const ProtectedPage = () => {
         }
       }
 
-      // Add chatbot's response to chat history
+      // Add chatbot's response to chat history with formatting
       const botMessage = { sender: 'bot', text: botAnswer || 'Sorry, I did not understand that.' };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
@@ -164,42 +182,64 @@ const ProtectedPage = () => {
       {/* Toolbar spacer to push content below the fixed navbar */}
       <Toolbar />
 
-      <Typography variant="h4" gutterBottom>
-        Chatbot Tester
-      </Typography>
-      {/* Optional: Chatbot Selector */}
-      <ChatbotSelector>
-        <InputLabel id="chatbot-selector-label">Select Chatbot</InputLabel>
-        <Select
-          labelId="chatbot-selector-label"
-          id="chatbot-selector"
-          value={selectedChatbot}
-          label="Select Chatbot"
-          onChange={handleChatbotChange}
-        >
-          <MenuItem value="fe4fa6cb-b1b8-433d-9637-d099c59ef15a">Recipe</MenuItem>
-          <MenuItem value="another-chatbot-id">Agility LLM </MenuItem>
-          {/* Add more chatbots as needed */}
-        </Select>
-      </ChatbotSelector>
       <ChatContainer elevation={3}>
+        {/* Header: Chatbot Tester and Selector */}
+        <HeaderContainer>
+          <Title variant="h4">
+            Chatbot Tester
+          </Title>
+          {/* Chatbot Selector */}
+          <ChatbotSelector>
+            <InputLabel id="chatbot-selector-label">Select Chatbot</InputLabel>
+            <Select
+              labelId="chatbot-selector-label"
+              id="chatbot-selector"
+              value={selectedChatbot}
+              label="Select Chatbot"
+              onChange={handleChatbotChange}
+            >
+              {Object.entries(chatbots).map(([id, name]) => (
+                <MenuItem key={id} value={id}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </ChatbotSelector>
+        </HeaderContainer>
+
+        {/* Messages Container */}
         <MessagesContainer>
           {messages.map((msg, index) => (
             <Message key={index} isUser={msg.sender === 'user'}>
               <MessageBubble isUser={msg.sender === 'user'}>
-                {msg.text}
+                {msg.sender === 'bot' ? (
+                  // Render formatted bot messages
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {msg.text}
+                  </ReactMarkdown>
+                ) : (
+                  // Render user messages as plain text
+                  msg.text
+                )}
               </MessageBubble>
             </Message>
           ))}
           {loading && (
             <Message isUser={false}>
               <MessageBubble isUser={false}>
-                <CircularProgress size={20} />
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <CircularProgress size={20} />
+                  <Typography variant="body2" color="textSecondary">
+                    Bot is typing...
+                  </Typography>
+                </Box>
               </MessageBubble>
             </Message>
           )}
           <div ref={messagesEndRef} />
         </MessagesContainer>
+
+        {/* Input Area */}
         <Box sx={{ display: 'flex', gap: 1 }}>
           <TextField
             variant="outlined"
@@ -210,12 +250,14 @@ const ProtectedPage = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
+            aria-label="Type your message"
           />
           <Button
             variant="contained"
             color="primary"
             onClick={handleSend}
             disabled={loading}
+            aria-label="Send Message"
           >
             Send
           </Button>
