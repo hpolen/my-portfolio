@@ -70,7 +70,7 @@ async function query(chatbotId, data) {
     `https://flowise-5ho4.onrender.com/api/v1/prediction/${chatbotId}`,
     {
       headers: {
-        Authorization: "Bearer b917qzuCsr1MqLJXnV8UTKiXV6IhbAAxSIkPEZSslUY",
+        Authorization: "Bearer mev--cGvYzvxOEwvdLzO-mDXTq_Eht7LvNYOSL-J26M",
         "Content-Type": "application/json"
       },
       method: "POST",
@@ -90,8 +90,8 @@ async function query(chatbotId, data) {
 const ProtectedPage = () => {
   // Define chatbots with their respective IDs and names
   const chatbots = {
-    "518b395d-93a7-47f1-bd11-8afd25b922d1": "Recipe",
-    "73ff577a-9d02-4ac5-bd01-f3cca4425116": "Harry Polen LLM"
+    "15e30afb-588e-49c3-bdb0-ea988244d8a0": "Recipe",
+    "d235ab93-1192-41fd-9b9f-aea2361dc4e6": "Harry Polen LLM"
   };
 
   // State for chat history
@@ -103,7 +103,7 @@ const ProtectedPage = () => {
   // Ref for auto-scrolling
   const messagesEndRef = useRef(null);
   // State for selected chatbot (if multiple)
-  const [selectedChatbot, setSelectedChatbot] = useState('518b395d-93a7-47f1-bd11-8afd25b922d1'); // Default to Recipe
+  const [selectedChatbot, setSelectedChatbot] = useState('15e30afb-588e-49c3-bdb0-ea988244d8a0'); // Default to Recipe
 
   // Scroll to the latest message whenever messages change
   useEffect(() => {

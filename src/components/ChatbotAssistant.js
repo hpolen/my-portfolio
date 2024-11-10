@@ -74,13 +74,13 @@ const InputContainer = styled(Box)(({ theme }) => ({
 
 // Chatbot Query Function
 async function query(data) {
-  const chatbotId = "73ff577a-9d02-4ac5-bd01-f3cca4425116"; // Harry Polen LLM
+  const chatbotId = "d235ab93-1192-41fd-9b9f-aea2361dc4e6"; // Harry Polen LLM
 
   const response = await fetch(
     `https://flowise-5ho4.onrender.com/api/v1/prediction/${chatbotId}`,
     {
       headers: {
-        Authorization: "Bearer b917qzuCsr1MqLJXnV8UTKiXV6IhbAAxSIkPEZSslUY",
+        Authorization: "Bearer mev--cGvYzvxOEwvdLzO-mDXTq_Eht7LvNYOSL-J26M",
         "Content-Type": "application/json"
       },
       method: "POST",
