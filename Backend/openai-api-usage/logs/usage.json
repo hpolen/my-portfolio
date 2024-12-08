@@ -1,0 +1,230 @@
+[
+  {
+    "timestamp": "2024-12-06T05:01:19.795Z",
+    "model": "gpt-3.5-turbo-0125",
+    "usage": {
+      "prompt_tokens": 13,
+      "completion_tokens": 31,
+      "total_tokens": 44,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "timestamp": "2024-12-06T13:35:54.555Z",
+    "model": "gpt-3.5-turbo-0125",
+    "usage": {
+      "prompt_tokens": 13,
+      "completion_tokens": 35,
+      "total_tokens": 48,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "timestamp": "2024-12-06T14:28:00.336Z",
+    "model": "gpt-3.5-turbo-0125",
+    "usage": {
+      "prompt_tokens": 13,
+      "completion_tokens": 31,
+      "total_tokens": 44,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "timestamp": "2024-12-06T14:28:36.324Z",
+    "model": "gpt-3.5-turbo-0125",
+    "usage": {
+      "prompt_tokens": 13,
+      "completion_tokens": 30,
+      "total_tokens": 43,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "timestamp": "2024-12-07T01:54:39.749Z",
+    "model": "gpt-3.5-turbo-0125",
+    "usage": {
+      "prompt_tokens": 13,
+      "completion_tokens": 29,
+      "total_tokens": 42,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "timestamp": "2024-12-07T05:03:35.225Z",
+    "model": "gpt-3.5-turbo-0125",
+    "usage": {
+      "prompt_tokens": 13,
+      "completion_tokens": 31,
+      "total_tokens": 44,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "timestamp": "2024-12-08T05:58:11.758Z",
+    "model": "gpt-3.5-turbo-0125",
+    "usage": {
+      "prompt_tokens": 13,
+      "completion_tokens": 33,
+      "total_tokens": 46,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "timestamp": "2024-12-08T05:59:20.509Z",
+    "model": "gpt-3.5-turbo-0125",
+    "usage": {
+      "prompt_tokens": 13,
+      "completion_tokens": 35,
+      "total_tokens": 48,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "timestamp": "2024-12-08T06:00:23.256Z",
+    "model": "gpt-3.5-turbo-0125",
+    "usage": {
+      "prompt_tokens": 13,
+      "completion_tokens": 31,
+      "total_tokens": 44,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "timestamp": "2024-12-08T06:04:00.471Z",
+    "model": "gpt-3.5-turbo-0125",
+    "usage": {
+      "prompt_tokens": 13,
+      "completion_tokens": 33,
+      "total_tokens": 46,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "timestamp": "2024-12-08T06:07:06.957Z",
+    "model": "gpt-3.5-turbo-0125",
+    "usage": {
+      "prompt_tokens": 13,
+      "completion_tokens": 31,
+      "total_tokens": 44,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "timestamp": "2024-12-08T06:08:35.811Z",
+    "model": "gpt-3.5-turbo-0125",
+    "usage": {
+      "prompt_tokens": 13,
+      "completion_tokens": 33,
+      "total_tokens": 46,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  }
+]
