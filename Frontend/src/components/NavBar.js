@@ -5,7 +5,7 @@ import { AppBar, Toolbar, Button, Box } from '@mui/material';
 import { Link as ScrollLink } from 'react-scroll'; // Rename to avoid confusion with React Router's Link
 import { useMsal } from '@azure/msal-react';
 import { loginRequest } from '../authConfig';
-import { Link as RouterLink } from 'react-router-dom'; // Removed useNavigate
+import { Link as RouterLink } from 'react-router-dom';
 
 function NavBar() {
   const { instance, accounts } = useMsal();
@@ -58,7 +58,6 @@ function NavBar() {
           >
             AI Experience
           </Button>
-          {/* Contact Button */}
           <Button
             color="primary"
             component={ScrollLink}
@@ -68,15 +67,25 @@ function NavBar() {
           >
             Contact
           </Button>
-          {/* New Protected Navigation Item */}
+
+          {/* Protected Pages */}
           {isAuthenticated && (
-            <Button
-              color="primary"
-              component={RouterLink}
-              to="/protected"
-            >
-              Protected Page
-            </Button>
+            <>
+              <Button
+                color="primary"
+                component={RouterLink}
+                to="/protected"
+              >
+                Protected Page
+              </Button>
+              <Button
+                color="primary"
+                component={RouterLink}
+                to="/openai-activity"
+              >
+                Open AI Activity
+              </Button>
+            </>
           )}
         </Box>
 

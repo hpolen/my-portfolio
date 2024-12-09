@@ -6,19 +6,19 @@ import HeroSection from './components/HeroSection';
 import AgileExperience from './components/AgileExperience';
 import ProcessOptimization from './components/ProcessOptimization';
 import AIExperience from './components/AIExperience';
-// import Technologies from './components/Technologies'; // Import the Technologies component
 import Footer from './components/Footer';
-import ProtectedPage from './components/ProtectedPage'; // Import the Protected Page
-import Contact from './components/Contact'; // Import the Contact component
+import ProtectedPage from './components/ProtectedPage';
+import Contact from './components/Contact';
 import { Box } from '@mui/material';
 import { Element } from 'react-scroll';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from './theme'; // Import the custom theme
-import { Routes, Route, Navigate } from 'react-router-dom'; // Import Routes, Route, Navigate
-import ProtectedRoute from './components/ProtectedRoute'; // Import ProtectedRoute
-import ChatbotAssistant from './components/ChatbotAssistant'; // Import ChatbotAssistant
+import theme from './theme';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
+import ChatbotAssistant from './components/ChatbotAssistant';
+import OpenAIActivity from './components/OpenAIActivity'; // Import the new page
 
 function App() {
   useEffect(() => {
@@ -45,23 +45,29 @@ function App() {
                 <Element name="ai">
                   <AIExperience />
                 </Element>
-                {/* Contact Section */}
                 <Element name="contact">
                   <Contact />
                 </Element>
                 <Footer />
-                {/* Chatbot Assistant */}
                 <ChatbotAssistant />
               </>
             }
           />
 
-          {/* Protected Route */}
+          {/* Protected Routes */}
           <Route
             path="/protected"
             element={
               <ProtectedRoute>
                 <ProtectedPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/openai-activity"
+            element={
+              <ProtectedRoute>
+                <OpenAIActivity />
               </ProtectedRoute>
             }
           />
