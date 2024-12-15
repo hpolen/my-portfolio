@@ -75,6 +75,10 @@ function NavBar() {
                 color="primary"
                 component={RouterLink}
                 to="/protected"
+                sx={{
+                  marginLeft: 1, // Add spacing between buttons
+                  textTransform: 'none', // Same styling as the other text buttons
+                }}
               >
                 Protected Page
               </Button>
@@ -82,6 +86,10 @@ function NavBar() {
                 color="primary"
                 component={RouterLink}
                 to="/openai-activity"
+                sx={{
+                  marginLeft: 1, // Add spacing between buttons
+                  textTransform: 'none', // Same styling as the other text buttons
+                }}
               >
                 Open AI Activity
               </Button>
