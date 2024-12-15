@@ -17,7 +17,7 @@ jobs:
       # Checkout the repository
       - uses: actions/checkout@v4
 
-      # Navigate to the backend folder and install dependencies
+      # Navigate to the backend/openai-api-usage folder and install dependencies
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
@@ -25,22 +25,22 @@ jobs:
 
       - name: Install dependencies and build
         run: |
-          cd Backend                   # Navigate to the backend folder
-          npm install                  # Install dependencies
-          npm run build --if-present   # Build if a build script exists
+          cd Backend/openai-api-usage     # Navigate to the backend/openai-api-usage folder
+          npm install                     # Install dependencies
+          npm run build --if-present      # Build if a build script exists
 
-      # Zip the contents of the backend folder
+      # Zip the contents of the backend/openai-api-usage folder
       - name: Zip artifact for deployment
         run: |
-          cd Backend                   # Navigate to the backend folder
-          zip -r release.zip .         # Zip the contents of the backend folder
+          cd Backend/openai-api-usage     # Navigate to the backend/openai-api-usage folder
+          zip -r release.zip .            # Zip the contents of the backend/openai-api-usage folder
 
       # Upload the zip file as an artifact for the deploy job
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: backend/release.zip    # Upload the zip file from the backend folder
+          path: backend/openai-api-usage/release.zip # Upload the zip file from the subfolder
 
   deploy:
     runs-on: ubuntu-latest
