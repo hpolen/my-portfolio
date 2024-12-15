@@ -29,7 +29,7 @@ app.post('/api/openai', async (req, res) => {
       { model, messages },
       {
         headers: {
-          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
         },
       }
@@ -41,9 +41,9 @@ app.post('/api/openai', async (req, res) => {
       id: `${Date.now()}`, // Unique ID
       timestamp: new Date().toISOString(),
       model,
-      prompt_tokens: usage.prompt_tokens,
-      completion_tokens: usage.completion_tokens,
-      total_tokens: usage.total_tokens,
+      prompt_tokens: usage.prompt_tokens || 0,
+      completion_tokens: usage.completion_tokens || 0,
+      total_tokens: usage.total_tokens || 0,
     };
 
     await container.items.create(logEntry);
