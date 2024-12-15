@@ -25,14 +25,14 @@ jobs:
 
       - name: Install dependencies and build
         run: |
-          cd backend                   # Navigate to the backend folder
+          cd Backend                   # Navigate to the backend folder
           npm install                  # Install dependencies
           npm run build --if-present   # Build if a build script exists
 
       # Zip the contents of the backend folder
       - name: Zip artifact for deployment
         run: |
-          cd backend                   # Navigate to the backend folder
+          cd Backend                   # Navigate to the backend folder
           zip -r release.zip .         # Zip the contents of the backend folder
 
       # Upload the zip file as an artifact for the deploy job
