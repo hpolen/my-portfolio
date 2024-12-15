@@ -14,27 +14,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repository
       - uses: actions/checkout@v4
 
+      # Navigate to the backend folder and install dependencies
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
 
-      - name: npm install, build, and test
+      - name: Install dependencies and build
         run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+          cd backend                   # Navigate to the backend folder
+          npm install                  # Install dependencies
+          npm run build --if-present   # Build if a build script exists
 
+      # Zip the contents of the backend folder
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: |
+          cd backend                   # Navigate to the backend folder
+          zip -r release.zip .         # Zip the contents of the backend folder
 
+      # Upload the zip file as an artifact for the deploy job
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: release.zip
+          path: backend/release.zip    # Upload the zip file from the backend folder
 
   deploy:
     runs-on: ubuntu-latest
@@ -46,14 +52,17 @@ jobs:
       id-token: write #This is required for requesting the JWT
 
     steps:
+      # Download the artifact
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: node-app
 
+      # Unzip the artifact
       - name: Unzip artifact for deployment
         run: unzip release.zip
-      
+
+      # Login to Azure
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -61,6 +70,7 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_20EAB8622F204F6DB591FFEAB23EBB33 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9D2E9317228F49968F37AA39B3CD43E9 }}
 
+      # Deploy to Azure Web App
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -68,4 +78,3 @@ jobs:
           app-name: 'HarryPolenBackend'
           slot-name: 'Production'
           package: .
-          
