@@ -2,10 +2,23 @@ const { CosmosClient } = require('@azure/cosmos');
 const express = require('express');
 const axios = require('axios');
 const bodyParser = require('body-parser');
+const cors = require('cors'); // Import CORS middleware
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// Enable CORS for local and production
+app.use(
+  cors({
+    origin: [
+      'http://localhost:3000', // Local development frontend
+      'https://www.harry-polen.com', // Replace with your production frontend URL
+    ],
+    methods: ['GET', 'POST', 'OPTIONS'],
+    credentials: true,
+  })
+);
 
 // Cosmos DB configuration
 const client = new CosmosClient(process.env.COSMOS_CONNECTION_STRING);
@@ -58,13 +71,11 @@ app.post('/api/openai', async (req, res) => {
 // Fetch aggregated usage metrics
 app.get('/api/usage/metrics', async (req, res) => {
   try {
-    // Query total tokens
     console.log('Fetching total tokens...');
     const totalTokensQuery = 'SELECT VALUE SUM(c.total_tokens) FROM c';
     const { resources: totalTokens } = await container.items.query(totalTokensQuery).fetchAll();
     console.log('Total Tokens:', totalTokens);
 
-    // Query model-specific usage
     console.log('Fetching model-specific usage...');
     const modelUsageQuery = `
       SELECT c.model, SUM(c.total_tokens) AS totalTokens
@@ -74,7 +85,6 @@ app.get('/api/usage/metrics', async (req, res) => {
     const { resources: modelUsage } = await container.items.query(modelUsageQuery).fetchAll();
     console.log('Model Usage:', modelUsage);
 
-    // Query usage over time (daily)
     console.log('Fetching usage over time...');
     const timeUsageQuery = `
       SELECT 
@@ -89,9 +99,8 @@ app.get('/api/usage/metrics', async (req, res) => {
     const { resources: timeUsage } = await container.items.query(timeUsageQuery).fetchAll();
     console.log('Time Usage:', timeUsage);
 
-    // Send response
     res.json({
-      totalTokens: totalTokens[0] || 0, // Default to 0 if no data
+      totalTokens: totalTokens[0] || 0,
       modelUsage: modelUsage || [],
       timeUsage: timeUsage.map(({ date_segment, totalTokens, promptTokens, completionTokens }) => ({
         date: date_segment,
@@ -118,7 +127,7 @@ app.get('/api/usage', async (req, res) => {
   }
 });
 
-// Start the server plz plz plz
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

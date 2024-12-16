@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Typography, CircularProgress, Box, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { Bar } from 'react-chartjs-2';
 import axios from 'axios';
@@ -16,49 +16,48 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const OpenAIActivity = () => {
-  const [metrics, setMetrics] = useState(null); // Stores the metrics data
-  const [filteredData, setFilteredData] = useState(null); // Stores filtered data for charts
-  const [selectedMonth, setSelectedMonth] = useState('All'); // Selected month for filtering
-  const [loading, setLoading] = useState(true); // Manages the loading state
-  const [error, setError] = useState(false); // Manages the error state
+  const [metrics, setMetrics] = useState(null);
+  const [filteredData, setFilteredData] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState('All');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  // Dynamic API Base URL (defaults to localhost for development)
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001';
 
   // Function to fetch metrics from the backend
-  const fetchMetrics = async () => {
+  const fetchMetrics = useCallback(async () => {
     try {
-      const response = await axios.get('/api/usage/metrics'); // Fetch data from backend
-      console.log('Metrics Updated:', response.data); // Debugging: log the fetched data
-      setMetrics(response.data); // Update metrics state with the response
-      setFilteredData(response.data.timeUsage); // Initially, show all data
-      setError(false); // Reset error state if successful
+      const response = await axios.get(`${API_BASE_URL}/api/usage/metrics`);
+      console.log('Metrics Updated:', response.data);
+      setMetrics(response.data);
+      setFilteredData(response.data.timeUsage);
+      setError(false);
     } catch (err) {
       console.error('Error fetching metrics:', err.message);
-      setError(true); // Set error state if API call fails
+      setError(true);
     } finally {
-      setLoading(false); // Ensure loading spinner stops
+      setLoading(false);
     }
-  };
+  }, [API_BASE_URL]);
 
-  // Effect to fetch data initially and set up data refresh
   useEffect(() => {
     fetchMetrics(); // Fetch data on component mount
 
-    // Set interval to refresh data every 60 seconds
     const interval = setInterval(() => {
       fetchMetrics(); // Refresh metrics periodically
     }, 15 * 60 * 1000);
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, []);
+    return () => clearInterval(interval);
+  }, [fetchMetrics]);
 
-  // Handle month selection
   const handleMonthChange = (event) => {
     const month = event.target.value;
     setSelectedMonth(month);
 
     if (month === 'All') {
-      setFilteredData(metrics.timeUsage); // Reset to show all data
+      setFilteredData(metrics.timeUsage);
     } else {
-      // Filter data by selected month
       const filtered = metrics.timeUsage.filter((item) =>
         item.date.startsWith(month)
       );
@@ -66,7 +65,6 @@ const OpenAIActivity = () => {
     }
   };
 
-  // Loading state: Display a spinner
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
@@ -75,7 +73,6 @@ const OpenAIActivity = () => {
     );
   }
 
-  // Error state: Display an error message
   if (error || !metrics) {
     return (
       <Typography variant="h6" color="error">
@@ -84,7 +81,6 @@ const OpenAIActivity = () => {
     );
   }
 
-  // Generate unique months for the dropdown from available data
   const availableMonths = [
     'All',
     ...Array.from(
@@ -92,49 +88,45 @@ const OpenAIActivity = () => {
     ),
   ];
 
-  // Prepare chart data for total tokens
   const totalTokensData = {
-    labels: filteredData.map((item) => item.date), // X-axis: dates
+    labels: filteredData.map((item) => item.date),
     datasets: [
       {
         label: 'Total Tokens',
-        data: filteredData.map((item) => item.totalTokens), // Y-axis: total tokens
-        backgroundColor: 'rgba(75, 192, 192, 0.6)', // Bar color
+        data: filteredData.map((item) => item.totalTokens),
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
       },
     ],
   };
 
-  // Prepare chart data for inbound tokens
   const inboundTokensData = {
-    labels: filteredData.map((item) => item.date), // X-axis: dates
+    labels: filteredData.map((item) => item.date),
     datasets: [
       {
         label: 'Inbound Tokens (Prompt)',
-        data: filteredData.map((item) => item.promptTokens), // Y-axis: prompt tokens
-        backgroundColor: 'rgba(54, 162, 235, 0.6)', // Bar color
+        data: filteredData.map((item) => item.promptTokens),
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
         borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 1,
       },
     ],
   };
 
-  // Prepare chart data for outbound tokens
   const outboundTokensData = {
-    labels: filteredData.map((item) => item.date), // X-axis: dates
+    labels: filteredData.map((item) => item.date),
     datasets: [
       {
         label: 'Outbound Tokens (Completion)',
-        data: filteredData.map((item) => item.completionTokens), // Y-axis: completion tokens
-        backgroundColor: 'rgba(255, 99, 132, 0.6)', // Bar color
+        data: filteredData.map((item) => item.completionTokens),
+        backgroundColor: 'rgba(255, 99, 132, 0.6)',
         borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1,
       },
     ],
   };
 
-  // Chart options
   const chartOptions = {
     responsive: true,
     plugins: {
@@ -160,7 +152,7 @@ const OpenAIActivity = () => {
   };
 
   return (
-    <Box p={4} mt={8}> {/* Added mt={8} to create vertical space */}
+    <Box p={4} mt={8}>
       <Typography variant="h4" gutterBottom>
         OpenAI Usage Metrics
       </Typography>
@@ -180,7 +172,6 @@ const OpenAIActivity = () => {
         ))}
       </ul>
 
-      {/* Month Filter Dropdown */}
       <FormControl fullWidth margin="normal">
         <InputLabel>Filter by Month</InputLabel>
         <Select
@@ -196,7 +187,6 @@ const OpenAIActivity = () => {
         </Select>
       </FormControl>
 
-      {/* Total Tokens Chart */}
       <Box mt={4}>
         <Typography variant="h6" gutterBottom>
           Usage Over Time (Total Tokens):
@@ -204,7 +194,6 @@ const OpenAIActivity = () => {
         <Bar data={totalTokensData} options={chartOptions} />
       </Box>
 
-      {/* Inbound Tokens Chart */}
       <Box mt={4}>
         <Typography variant="h6" gutterBottom>
           Inbound Tokens Over Time (Prompt Tokens):
@@ -212,7 +201,6 @@ const OpenAIActivity = () => {
         <Bar data={inboundTokensData} options={chartOptions} />
       </Box>
 
-      {/* Outbound Tokens Chart */}
       <Box mt={4}>
         <Typography variant="h6" gutterBottom>
           Outbound Tokens Over Time (Completion Tokens):
