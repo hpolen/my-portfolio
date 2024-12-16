@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: backend/openai-api-usage/release.zip # Upload the zip file from the subfolder
+          path: Backend/openai-api-usage/release.zip # Upload the zip file from the subfolder
 
   deploy:
     runs-on: ubuntu-latest
