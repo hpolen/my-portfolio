@@ -118,7 +118,7 @@ app.get('/api/usage', async (req, res) => {
   }
 });
 
-// Start the server plz
+// Start the server plz plz
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
