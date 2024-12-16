@@ -2,7 +2,7 @@ const { CosmosClient } = require('@azure/cosmos');
 const express = require('express');
 const axios = require('axios');
 const bodyParser = require('body-parser');
-const cors = require('cors'); // Import CORS middleware
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
@@ -12,8 +12,8 @@ const PORT = process.env.PORT || 3001;
 app.use(
   cors({
     origin: [
-      'http://localhost:3000', // Local development frontend
-      'https://www.harry-polen.com', // Replace with your production frontend URL
+      'http://localhost:3000', // Local frontend
+      'https://www.harry-polen.com', // Production frontend
     ],
     methods: ['GET', 'POST', 'OPTIONS'],
     credentials: true,
@@ -33,10 +33,16 @@ app.post('/api/openai', async (req, res) => {
   try {
     const { model, messages } = req.body;
 
+    // Validate the request body
     if (!model || !messages) {
-      return res.status(400).send('Request body must include "model" and "messages".');
+      console.error('Invalid request body:', req.body);
+      return res.status(400).json({ error: 'Request body must include "model" and "messages".' });
     }
 
+    console.log('Sending request to OpenAI API...');
+    console.log('Request Body:', { model, messages });
+
+    // Send the request to OpenAI
     const response = await axios.post(
       'https://api.openai.com/v1/chat/completions',
       { model, messages },
@@ -48,23 +54,38 @@ app.post('/api/openai', async (req, res) => {
       }
     );
 
+    console.log('OpenAI API Response:', response.data);
+
+    // Extract usage details
     const { usage } = response.data;
 
+    // Prepare log entry for Cosmos DB
     const logEntry = {
       id: `${Date.now()}`, // Unique ID
       timestamp: new Date().toISOString(),
       model,
-      prompt_tokens: usage.prompt_tokens || 0,
-      completion_tokens: usage.completion_tokens || 0,
-      total_tokens: usage.total_tokens || 0,
+      prompt_tokens: usage?.prompt_tokens || 0,
+      completion_tokens: usage?.completion_tokens || 0,
+      total_tokens: usage?.total_tokens || 0,
     };
 
+    console.log('Saving log entry to Cosmos DB:', logEntry);
+
+    // Save the log entry to Cosmos DB
     await container.items.create(logEntry);
 
+    // Return the OpenAI response to the client
     res.json(response.data);
   } catch (error) {
-    console.error('Error communicating with OpenAI API:', error.message);
-    res.status(500).send('Error communicating with OpenAI API');
+    console.error('Error processing OpenAI request:', error.message);
+
+    if (error.response) {
+      // Log OpenAI API error response details
+      console.error('OpenAI API Error Response:', error.response.data);
+      return res.status(error.response.status).json(error.response.data);
+    }
+
+    res.status(500).json({ error: 'Error communicating with OpenAI API' });
   }
 });
 
