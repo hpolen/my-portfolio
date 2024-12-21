@@ -5,7 +5,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 export const msalConfig = {
   auth: {
     clientId: process.env.REACT_APP_CLIENT_ID, // From .env
-    authority: `https://harrypolen.b2clogin.com/harrypolen.onmicrosoft.com/B2C_1_signupsignin`, // B2C tenant and sign-in user flow
+    authority: `https://harrypolen.b2clogin.com/harrypolen.onmicrosoft.com/B2C_1_signin`, // B2C tenant and sign-in user flow
     redirectUri: isProduction ? "https://www.harry-polen.com" : process.env.REACT_APP_REDIRECT_URI,
     knownAuthorities: ["harrypolen.b2clogin.com"], // B2C domain
   },
