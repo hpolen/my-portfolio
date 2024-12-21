@@ -18,7 +18,8 @@ import theme from './theme';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import ChatbotAssistant from './components/ChatbotAssistant';
-import OpenAIActivity from './components/OpenAIActivity'; // Import the new page
+import OpenAIActivity from './components/OpenAIActivity';
+import LoginPage from './components/LoginPage'; // Import the new Login Page component
 
 function App() {
   useEffect(() => {
@@ -53,6 +54,9 @@ function App() {
               </>
             }
           />
+
+          {/* Dedicated Login Page Route */}
+          <Route path="/login" element={<LoginPage />} />
 
           {/* Protected Routes */}
           <Route

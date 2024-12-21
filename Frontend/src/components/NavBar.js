@@ -10,6 +10,7 @@ import { Link as RouterLink } from 'react-router-dom';
 function NavBar() {
   const { instance, accounts } = useMsal();
 
+  // Login and Logout Handlers
   const handleLogin = () => {
     instance.loginRedirect(loginRequest).catch((e) => {
       console.error('Login Redirect Error:', e);
@@ -97,6 +98,23 @@ function NavBar() {
           )}
         </Box>
 
+        {/* Dedicated Login Page Link 
+        <Box>
+          {!isAuthenticated && (
+            <Button
+              color="secondary"
+              component={RouterLink}
+              to="/login"
+              sx={{
+                marginRight: 2, // Add spacing to the right
+                textTransform: 'none',
+              }}
+            >
+              Go to Login Page
+            </Button>
+          )}
+        </Box>
+              */}
         {/* Login/Logout Button */}
         <Box>
           {isAuthenticated ? (
